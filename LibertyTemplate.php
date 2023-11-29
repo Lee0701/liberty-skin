@@ -621,8 +621,10 @@ class LibertyTemplate extends BaseTemplate {
 						if ( $permissionManager->quickUserCan( 'protect', $user, $title ) ) { ?>
 							<div class="dropdown-divider"></div>
 							<?php
+							$services = MediaWikiServices::getInstance();
+							$restrictionStore = $services->getRestrictionStore();
 							// different labels depending on whether the page is or isn't protected
-							$protectionMsg = $title->isProtected() ? 'unprotect' : 'protect';
+							$protectionMsg = $restrictionStore->isProtected( $title ) ? 'unprotect' : 'protect';
 							echo $linkRenderer->makeKnownLink(
 								$title,
 								$skin->msg( $protectionMsg )->plain(),
