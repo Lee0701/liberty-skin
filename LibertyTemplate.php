@@ -905,6 +905,8 @@ class LibertyTemplate extends BaseTemplate {
 			return $headings;
 		}
 
+		$data = $data->getText();
+
 		$lines = explode( "\n", $data );
 
 		$types = [ 'icon', 'display', 'title', 'link', 'access', 'class' ];
