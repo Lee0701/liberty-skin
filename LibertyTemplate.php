@@ -131,32 +131,34 @@ class LibertyTemplate extends BaseTemplate {
 		<nav class="navbar navbar-dark">
 			<a class="navbar-brand" href="<?php echo Title::newMainPage()->getLocalURL(); ?>"></a>
 			<ul class="nav navbar-nav">
-				<li class="nav-item">
-					<?php echo $linkRenderer->makeKnownLink(
-						new TitleValue( NS_SPECIAL, 'Recentchanges' ),
-						// @codingStandardsIgnoreStart
-						new HtmlArmor( '<span class="fas fa-sync"></span><span class="hide-title">' . $skin->msg( 'recentchanges' )->plain() . '</span>' ),
-						// @codingStandardsIgnoreEnd )
-						[
-							'class' => 'nav-link',
-							'title' => Linker::titleAttrib( 'n-recentchanges', 'withaccess' ),
-							'accesskey' => Linker::accesskey( 'n-recentchanges' )
-						] );?>
-				</li>
-				<li class="nav-item">
-					<?php echo $linkRenderer->makeKnownLink(
-						new TitleValue( NS_SPECIAL, 'Randompage' ),
-						// @codingStandardsIgnoreStart
-						new HtmlArmor( '<span class="fa fa-random"></span><span class="hide-title">' . $skin->msg( 'randompage' )->plain() . '</span>' ),
-						// @codingStandardsIgnoreEnd
-						[
-							'class' => 'nav-link',
-							'title' => Linker::titleAttrib( 'n-randompage', 'withaccess' ),
-							'accesskey' => Linker::accesskey( 'n-randompage' )
-						]
-					); ?>
-				</li>
+
 				<?php echo $this->renderPortal( $this->parseNavbar() ); ?>
+
+				<!-- Add language switcher to main navbar -->
+				<?php if($this->data['language_urls'] !== false) { ?>
+					<?php foreach($this->data['language_urls'] as $key => $lang) { ?>
+						<li class="dropdown nav-item">
+							<a class="nav-link dropdown-toggle dropdown-toggle-fix"
+								data-toggle="dropdown"
+								role="button"
+								aria-haspopup="true"
+								aria-expanded="true"
+								title="도구">
+
+								<span class="fa fa-language" aria-hidden="true"></span>
+								<span class="hide-title"><?php echo wfMessage('otherlanguages') ?></span>
+							</a>
+							<div class="dropdown-menu" role="menu">
+								<a class="dropdown-item  <?php echo $lang['class']; ?>"
+									href="<?php echo $lang['href']; ?>"
+									title="<?php echo $lang['title']; ?>">
+
+									<?php echo $lang['title']; ?>
+								</a>
+							</div>
+						</li>
+					<?php } ?>
+				<?php }?>
 			</ul>
 			<?php $this->loginBox(); ?>
 			<?php $this->getNotification(); ?>
