@@ -132,7 +132,6 @@ class LibertyTemplate extends BaseTemplate {
 		<nav class="navbar navbar-dark">
 			<a class="navbar-brand" href="<?php echo Title::newMainPage()->getLocalURL(); ?>"></a>
 			<ul class="nav navbar-nav">
-
 				<?php echo $this->renderPortal( $this->parseNavbar() ); ?>
 
 				<!-- Add language switcher to main navbar -->
@@ -316,13 +315,21 @@ class LibertyTemplate extends BaseTemplate {
 						<div class="dropdown-divider view-logout"></div>
 						<a href="<?php echo $personalTools['logout']['links'][0]['href']; ?>" 
 							class="dropdown-item view-logout" 
-							title="<?php echo Linker::titleAttrib( 'pt-logout', 'withaccess' ); ?>">
+							title="<?php
+							// @codingStandardsIgnoreStart
+							echo htmlspecialchars( Linker::titleAttrib( 'pt-logout', 'withaccess' ), ENT_QUOTES )
+							// @codingStandardsIgnoreEnd
+							?>">
 							<?php echo $skin->msg( 'logout' )->escaped(); ?></a>
 					</div>
 				</div>
 				<a href="<?php echo $personalTools['logout']['links'][0]['href']; ?>"
 					class="hide-logout logout-btn" 
-					title="<?php echo Linker::titleAttrib( 'pt-logout', 'withaccess' ); ?>">
+					title="<?php
+					// @codingStandardsIgnoreStart
+					echo htmlspecialchars( Linker::titleAttrib( 'pt-logout', 'withaccess' ), ENT_QUOTES );
+					// @codingStandardsIgnoreEnd
+					?>">
 					<span class="fa fa-sign-out"></span></a>
 			<?php } else { ?>
 				<a href="#" class="none-outline" data-toggle="modal" data-target="#login-modal">
@@ -454,7 +461,7 @@ class LibertyTemplate extends BaseTemplate {
 				<?php echo $linkRenderer->makeKnownLink(
 					SpecialPage::getTitleFor( 'Recentchanges' ),
 					new HtmlArmor( '<span class="label label-info">' .
-						$skin->msg( 'liberty-view-more' )->plain() .
+						$skin->msg( 'liberty-view-more' )->escaped() .
 						'</span>' )
 				); ?>
 			</div>
@@ -488,7 +495,7 @@ class LibertyTemplate extends BaseTemplate {
 					$editIcon = $editable ? '<i class="fa fa-edit"></i> ' : '<i class="fa fa-lock"></i> ';
 					echo $linkRenderer->makeKnownLink(
 						$title,
-						new HtmlArmor( $editIcon . $skin->msg( "edit" )->plain() ),
+						new HtmlArmor( $editIcon . $skin->msg( 'edit' )->escaped() ),
 						[
 							'class' => 'btn btn-secondary tools-btn',
 							'id' => 'ca-edit',
